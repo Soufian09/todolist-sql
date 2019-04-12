@@ -1,13 +1,11 @@
 <?php
-
    include 'connexion.php';
    include 'modification.php';
    
    //affiche mes données de la table des tâches et de l'archive 
    $taches = $bdd -> query('SELECT * FROM todos');
    $archive = $bdd -> query('SELECT * FROM archive');
-?>
-
+   ?>
 <!DOCTYPE html>
 <html>
    <head>
@@ -20,42 +18,36 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
       <link rel="stylesheet" type="text/css" media="screen" href="style.css">
-
    <body>
       <section class="container text-white">
-         <h1 class="text-center">Tâches a realiser</h1>
-         <form class="d-flex justify-content-around" action="index.php" method="POST" >
-          <section class="border border-primary">
-            <h2>liste :</h2>
-               <?php
-                  while ($donnees = $taches -> fetch())
-                      {
-                      echo "<p> <input name='checkbox[]' type='checkbox' value='".$donnees['taches']."'/> ".$donnees['taches']."</p>";
-                      }
+      <h1 class="text-center">Tâches à realiser</h1>
+      <form class="d-flex justify-content-around" action="index.php" method="POST" >
+         <section class="border border-primary col-md-4" data-spy="scroll">
+            <h2>Liste :</h2>
+            <?php
+               while ($donnees = $taches -> fetch())
+                   {
+                   echo "<p> <input name='checkbox[]' type='checkbox' value='".$donnees['taches']."'/> ".$donnees['taches']."</p>";
+                   }
                ?>
-                  <input name="delete" type="submit" value="Tâche accomplie">
-          </section>  
-
-         <section  class="border border-primary">    
+            <input name="delete" type="submit" value="Tâche accomplie">
+         </section>
+         <section  class="border border-primary col-md-4">
             <h2>Archive :</h2>
             <?php
                while ($donnees = $archive -> fetch()){
                   echo "<p class='valide'> <input name='checkbox[]' type='checkbox' value='".$donnees['taches']."' checked='checked' disabled='disabled'/> ".$donnees['taches']."</p>";                  }
                   ?>
-          </section>
-
-         <section  class="border border-primary">
+         </section>
+         <section  class="border border-primary col-md-3">
             <p>Ajouter une tâche : </p>
             <input type="text" cols="30" rows="2" name="newTask"/>
             <button type="submit" value="Ajouter" name="enter">Entrer</button>
          </section>
-         </form>
-      
-   
+      </form>
       <?php
          $archive->closeCursor();
          $taches->closeCursor();
-      ?>
-   
+         ?>
    </body>
 </html>
